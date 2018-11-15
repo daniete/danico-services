@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danico's patronen</title>
+</head>
+<body>
+<h1>Lijst met patronen</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Naam</th>
+        <th>Doos</th>
+    </tr>
+    <tr th:each="patroon : ${patronen}">
+        <td th:text="${patroon.id}">123</td>
+        <td th:text="${patroon.name}">Cools</td>
+        <td th:text="${patroon.doos}">A</td>
+    </tr>
+
+</table>
+</body>
+</html>
