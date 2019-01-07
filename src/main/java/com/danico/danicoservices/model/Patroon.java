@@ -1,26 +1,42 @@
 package com.danico.danicoservices.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
+@Data
+@Table(schema = "public", name = "patroon")
 public class Patroon {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "patroon_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String name;
-    private String doos;
+
+    //@ManyToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "klant_id", referencedColumnName = "klant_id", nullable = false)
+    private Klant klant;
+
+    //@ManyToOne(fetch =FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "doos_id", referencedColumnName = "doos_id", nullable = false)
+    private Doos doos;
+
+    @Column(name = "path")
     private String path;
+
+    @Column(name = "opmerking")
+    private String opmerking;
 
     public Patroon(){
     }
 
-    public Patroon(String name, String doos, String path) {
-        this.name = name;
+    public Patroon(Klant klant, Doos doos, String opmerking, String path) {
+        this.klant = klant;
         this.doos = doos;
+        this.opmerking = opmerking;
         this.path = path;
     }
 
@@ -32,19 +48,19 @@ public class Patroon {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Klant getKlant() {
+        return klant;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKlant(Klant klant) {
+        this.klant = klant;
     }
 
-    public String getDoos() {
+    public Doos getDoos() {
         return doos;
     }
 
-    public void setDoos(String doos) {
+    public void setDoos(Doos doos) {
         this.doos = doos;
     }
 
@@ -56,25 +72,11 @@ public class Patroon {
         this.path = path;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Patroon patroon = (Patroon) o;
-
-        if (id != patroon.id) return false;
-        if (name != null ? !name.equals(patroon.name) : patroon.name != null) return false;
-        if (doos != null ? !doos.equals(patroon.doos) : patroon.doos != null) return false;
-        return path != null ? path.equals(patroon.path) : patroon.path == null;
+    public String getOpmerking() {
+        return opmerking;
     }
 
-    @Override
-    public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (doos != null ? doos.hashCode() : 0);
-        result = 31 * result + (path != null ? path.hashCode() : 0);
-        return result;
+    public void setOpmerking(String opmerking) {
+        this.opmerking = opmerking;
     }
 }
